@@ -1,0 +1,10 @@
+name: phples
+recipe: lamp
+config:
+  webroot: .
+services:
+  database:
+    portforward: 3320
+    type: mariadb
+  phpmyadmin:
+    type: phpmyadmin
