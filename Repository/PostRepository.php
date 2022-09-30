@@ -22,6 +22,15 @@ class PostRepository
 		return false;
 	}
 
+	public function addPost(Post $post): bool
+	{
+		$database = new Database();
+		$sql = 'insert into post(title, message)
+				values (?, ?)';
+		$result = $database->executeQuery($sql, 'ss', $post->getTitle(), $post->getMessage());
+		return $result->isSuccess();
+	}
+
 	private function convertToClasses(array $data): array
 	{
 		$rd = array();

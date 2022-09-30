@@ -21,7 +21,8 @@ class Database
 			$stmt->bind_param($types, ...$vars);
 		}
 		$success = $stmt->execute();
-		$data = $success ? $stmt->get_result()->fetch_all(MYSQLI_ASSOC) : [];
+		$mysqliResult = $success ? $stmt->get_result() : false;
+		$data = $mysqliResult ? $mysqliResult->fetch_all(MYSQLI_ASSOC) : [];
 		return new Result($success, $data);
 	}
 }
