@@ -1,17 +1,3 @@
-<?php
-
-$mysqli = new mysqli("database", "lamp", "lamp", "lamp");
-
-$sql = '
-	select * 
-	from post
-	order by id desc 
-';
-$result = $mysqli->query($sql);
-$posts = $result->fetch_all(MYSQLI_ASSOC);
-
-?>
-
 <!doctype html>
 <html lang="nl">
 <head>
@@ -23,7 +9,7 @@ $posts = $result->fetch_all(MYSQLI_ASSOC);
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
 		  integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 </head>
-<body class="bg-dark">
+<body class="bg-dark text-light">
 <nav class="navbar navbar-dark navbar-expand-lg bg-primary">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="#">Fake FB</a>
@@ -34,26 +20,27 @@ $posts = $result->fetch_all(MYSQLI_ASSOC);
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="index.php">Home</a>
+					<a class="nav-link" aria-current="page" href="index.php">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="createPost.php">Create post</a>
+					<a class="nav-link active" href="createPost.php">Create post</a>
 				</li>
 			</ul>
 		</div>
 	</div>
 </nav>
 <div class="container mt-3">
-	<?php foreach ($posts as $post) { ?>
-	<div class="card mb-2">
-		<div class="card-body">
-			<h5 class="card-title"><?= $post['title'] ?></h5>
-			<p class="card-text"><?= $post['message'] ?></p>
-			<a href="#" class="card-link">Card link</a>
-			<a href="#" class="card-link">Another link</a>
+	<form method="post" action="postForm.php">
+		<div class="mb-3">
+			<label for="title" class="form-label">Title</label>
+			<input type="text" name="title" class="form-control" id="title">
 		</div>
-	</div>
-	<?php } ?>
+		<div class="mb-3">
+			<label for="message" class="form-label">Message</label>
+			<textarea class="form-control" name="message" id="message" rows="3"></textarea>
+		</div>
+		<button type="submit" class="btn btn-primary">Verstuur</button>
+	</form>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
