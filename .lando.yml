@@ -1,7 +1,9 @@
 name: phples
 recipe: lamp
 config:
+  php: '8.1'
   webroot: .
+  xdebug: true
 services:
   database:
     portforward: 3320
