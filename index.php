@@ -1,14 +1,8 @@
 <?php
 
-$mysqli = new mysqli("database", "lamp", "lamp", "lamp");
-
-$sql = '
-	select * 
-	from post
-	order by id desc 
-';
-$result = $mysqli->query($sql);
-$posts = $result->fetch_all(MYSQLI_ASSOC);
+include_once __DIR__ . '/Repository/PostRepository.php';
+$postRepository = new PostRepository();
+$posts = $postRepository->getPosts();
 
 ?>
 
@@ -44,15 +38,16 @@ $posts = $result->fetch_all(MYSQLI_ASSOC);
 	</div>
 </nav>
 <div class="container mt-3">
-	<?php foreach ($posts as $post) { ?>
-	<div class="card mb-2">
-		<div class="card-body">
-			<h5 class="card-title"><?= $post['title'] ?></h5>
-			<p class="card-text"><?= $post['message'] ?></p>
-			<a href="#" class="card-link">Card link</a>
-			<a href="#" class="card-link">Another link</a>
+	<?php
+	foreach ($posts as $post) {
+		/* @var $post Post */
+		?>
+		<div class="card mb-2">
+			<div class="card-body">
+				<h5 class="card-title"><?= $post->getTitle() ?></h5>
+				<p class="card-text"><?= $post->getMessage() ?></p>
+			</div>
 		</div>
-	</div>
 	<?php } ?>
 </div>
 
