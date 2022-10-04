@@ -1,4 +1,5 @@
 <?php
+namespace Entity;
 
 class Post
 {
@@ -9,6 +10,7 @@ class Post
 	/**
 	 * @param string $title
 	 * @param string $message
+	 * @param int|null $id
 	 */
 	public function __construct(string $title, string $message, int|null $id = null)
 	{

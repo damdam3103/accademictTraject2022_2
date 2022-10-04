@@ -1,6 +1,9 @@
 <?php
-include_once __DIR__ . '/../Entity/Post.php';
-include_once __DIR__ . '/../Utility/Database.php';
+namespace Repository;
+
+use Doctrine\DBAL\Exception;
+use Entity\Post;
+use Utility\Database;
 
 class PostRepository
 {
@@ -12,23 +15,38 @@ class PostRepository
 	public function getPosts(): bool|array
 	{
 		$database = new Database();
-		$sql = 'select * 
-				from post
-				order by id desc';
-		$result = $database->executeQuery($sql);
-		if ($result->isSuccess()) {
-			return $this->convertToClasses($result->getData());
+		$queryBuilder = $database->getQueryBuilder();
+
+		try {
+			$result = $queryBuilder
+				->select('*')
+				->from('post')
+				->orderBy('id', 'desc')
+				->fetchAllAssociative();
+			return $this->convertToClasses($result);
+		} catch (Exception $e) {
+			return false;
 		}
-		return false;
+
 	}
 
 	public function addPost(Post $post): bool
 	{
 		$database = new Database();
-		$sql = 'insert into post(title, message)
-				values (?, ?)';
-		$result = $database->executeQuery($sql, 'ss', $post->getTitle(), $post->getMessage());
-		return $result->isSuccess();
+		$queryBuilder = $database->getQueryBuilder();
+		$affectedRows = $queryBuilder
+			->insert('post')
+			->values(
+				[
+					'title' => '?',
+					'message' => '?',
+				]
+			)
+			->setParameter(0, $post->getTitle())
+			->setParameter(1, $post->getMessage())
+			->executeStatement();
+
+		return $affectedRows > 0;
 	}
 
 	private function convertToClasses(array $data): array

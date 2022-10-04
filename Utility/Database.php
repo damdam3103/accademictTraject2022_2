@@ -1,28 +1,34 @@
 <?php
-include_once __DIR__ . '/Result.php';
+
+namespace Utility;
+
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 class Database
 {
-	private mysqli $mysqli;
+	private Connection $connection;
 	private string $hostname = 'database';
 	private string $username = 'lamp';
 	private string $password = 'lamp';
-	private string $databse = 'lamp';
+	private string $database = 'lamp';
 
 	public function __construct()
 	{
-		$this->mysqli = new mysqli($this->hostname, $this->username, $this->password, $this->databse);
+		$connectionParams = [
+			'dbname' => $this->database,
+			'user' => $this->username,
+			'password' => $this->password,
+			'host' => $this->hostname,
+			'driver' => 'mysqli',
+		];
+		$this->connection = DriverManager::getConnection($connectionParams);
+
 	}
 
-	public function executeQuery(string $sql, string $types = '' ,mixed ...$vars): Result
+	public function getQueryBuilder(): QueryBuilder
 	{
-		$stmt = $this->mysqli->prepare($sql);
-		if (!empty($types)){
-			$stmt->bind_param($types, ...$vars);
-		}
-		$success = $stmt->execute();
-		$mysqliResult = $success ? $stmt->get_result() : false;
-		$data = $mysqliResult ? $mysqliResult->fetch_all(MYSQLI_ASSOC) : [];
-		return new Result($success, $data);
+		return $this->connection->createQueryBuilder();
 	}
 }

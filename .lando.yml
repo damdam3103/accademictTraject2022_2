@@ -2,7 +2,7 @@ name: phples
 recipe: lamp
 config:
   php: '8.1'
-  webroot: .
+  webroot: public
   xdebug: true
 services:
   database:

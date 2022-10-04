@@ -20,17 +20,17 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link" aria-current="page" href="index.php">Home</a>
+					<a class="nav-link" aria-current="page" href="/">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="createPost.php">Create post</a>
+					<a class="nav-link active" href="/post/create">Create post</a>
 				</li>
 			</ul>
 		</div>
 	</div>
 </nav>
 <div class="container mt-3">
-	<form method="post" action="postForm.php">
+	<form method="post" action="/post/add">
 		<div class="mb-3">
 			<label for="title" class="form-label">Title</label>
 			<input type="text" name="title" class="form-control" id="title">

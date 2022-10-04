@@ -1,6 +1,10 @@
 <?php
 
-include_once __DIR__ . '/Repository/PostRepository.php';
+use Entity\Post;
+use Repository\PostRepository;
+
+require_once 'vendor/autoload.php';
+
 $postRepository = new PostRepository();
 $posts = $postRepository->getPosts();
 
@@ -28,10 +32,10 @@ $posts = $postRepository->getPosts();
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="index.php">Home</a>
+					<a class="nav-link active" aria-current="page" href="/">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="createPost.php">Create post</a>
+					<a class="nav-link" href="/post/create">Create post</a>
 				</li>
 			</ul>
 		</div>
