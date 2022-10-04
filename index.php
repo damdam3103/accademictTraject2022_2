@@ -1,11 +1,8 @@
 <?php
 
-use Mpdf\Mpdf;
-
 require_once 'vendor/autoload.php';
 
-$mpdf = new Mpdf();
-
+session_start();
 
 $mysqli = new mysqli("database", "lamp", "lamp", "lamp");
 
@@ -57,7 +54,7 @@ $posts = $result->fetch_all(MYSQLI_ASSOC);
 			<div class="card-body">
 				<h5 class="card-title"><?= $post['title'] ?></h5>
 				<p class="card-text"><?= $post['message'] ?></p>
-				<a href="#" onclick="likePost2(<?= $post['id'] ?>)"  class="card-link text-decoration-none text-dark"><i
+				<a href="#" onclick="likePost(<?= $post['id'] ?>)"  class="card-link text-decoration-none text-dark"><i
 							class="bi bi-hand-thumbs-up"></i>: <?= $post['likes'] ?> like
 					this</a>
 			</div>
@@ -65,18 +62,21 @@ $posts = $result->fetch_all(MYSQLI_ASSOC);
 	<?php } ?>
 </div>
 <script>
-	function likePost2(id){
+	function likePost(id){
 		let form = new FormData();
 		form.append('id', id);
 		form.append('type', 'unlike')
 		const options = {
 			method: 'POST',
+			credentials: 'same-origin',
 			body: form
 		}
 		fetch('/likePost.php', options)
 			.then((rd) => {
-				location.reload();
-			console.log(rd);
+				rd.json().then((data) =>{
+					console.log(data);
+					location.reload();
+				})
 		}).catch((err) => {
 			console.log(err);
 		});
@@ -88,21 +88,4 @@ $posts = $result->fetch_all(MYSQLI_ASSOC);
 		crossorigin="anonymous"></script>
 </body>
 </html>
-
-
-
-
-<script>
-	function likePost(id) {
-		const form = new FormData();
-		form.append('id', id);
-		const options = {
-			method: 'POST',
-			body: form
-		}
-		fetch('/likePost.php', options).then(() => {
-			location.reload();
-		});
-	}
-</script>
 
