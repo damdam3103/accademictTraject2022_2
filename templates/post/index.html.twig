@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	{% for post in posts %}
+		<div class="card mb-2">
+			<div class="card-body">
+				<h5 class="card-title">{{ post.title }}</h5>
+				<p class="card-text">{{ post.message }}</p>
+				<a href="#" onclick="likePost({{ post.id }})" class="card-link text-decoration-none text-dark"><i
+							class="bi bi-hand-thumbs-up"></i>: {{ post.likes }} like
+					this</a>
+				<a href="{{ path('post_details', {id: post.id}) }}" class="btn btn-info">Show details</a>
+			</div>
+		</div>
+	{% endfor %}
+
+	<script>
+		function likePost(id) {
+			let form = new FormData();
+			form.append('id', id);
+			const options = {
+				method: 'POST',
+				body: form
+			}
+			fetch('{{ path("api_post_likes") }}', options)
+				.then((rd) => {
+					rd.json().then((data) => {
+						console.log(data);
+						location.reload();
+					})
+				}).catch((err) => {
+				console.log(err);
+			});
+		}
+	</script>
+{% endblock %}
