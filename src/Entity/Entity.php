@@ -22,9 +22,10 @@ abstract class Entity
 	public function __construct()
 	{
 		$this->setCreated(new \DateTime());
-		if ($this->getModified() == null) {
-			$this->setModified(new \DateTime());
-		}
+		$this->setModified(new \DateTime());
+//		if ($this->getModified() == null) {
+//			$this->setModified(new \DateTime());
+//		}
 	}
 
 	// By adding this annotation, this function will be called before any persist or update
@@ -72,7 +73,7 @@ abstract class Entity
 	/**
 	 * @return \DateTime|null
 	 */
-	public function getModified(): ?\DateTime
+	protected function getModified(): ?\DateTime
 	{
 		return $this->modified;
 	}

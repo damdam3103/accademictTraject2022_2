@@ -2,6 +2,9 @@
 
 {% block body %}
 {{ form_start(form) }}
+	<div class="text-danger">
+		{{ form_errors(form.title) }}
+	</div>
 	<h1 class="text-white">
 		{{ form_label(form.title) }}
 	</h1>
