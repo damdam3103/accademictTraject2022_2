@@ -9,21 +9,27 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Post extends Entity
 {
 	#[ORM\Column(length: 191)]
 	#[Assert\Length(min: 3)]
+	#[Groups(['default'])]
 	private ?string $title = null;
 
 	#[ORM\Column(type: Types::TEXT)]
+	#[Groups(['default'])]
 	private ?string $message = null;
 
 	#[ORM\Column]
+	#[Groups(['default'])]
 	private ?int $likes = null;
 
 	#[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class)]
+	#[Groups(['default'])]
 	private Collection $comments;
 
 	public function __construct()

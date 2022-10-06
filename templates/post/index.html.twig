@@ -9,6 +9,13 @@
 				<a href="#" onclick="likePost({{ post.id }})" class="card-link text-decoration-none text-dark"><i
 							class="bi bi-hand-thumbs-up"></i>: {{ post.likes }} like
 					this</a>
+				<hr >
+				<small>
+					{% for comment in post.comments %}
+						{{ comment.message }} by {{ comment.author }} <br>
+					{% endfor %}
+				</small>
+				<hr >
 				<a href="{{ path('post_details', {id: post.id}) }}" class="btn btn-info">Show details</a>
 				<a href="{{ path('post_edit', {id: post.id}) }}" class="btn btn-warning">EDIT</a>
 			</div>
