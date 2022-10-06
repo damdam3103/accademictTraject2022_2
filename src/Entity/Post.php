@@ -7,13 +7,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
-class Post
+#[ORM\HasLifecycleCallbacks]
+class Post extends Entity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column(length: 191)]
     private ?string $title = null;
 
@@ -26,12 +22,9 @@ class Post
 	public function __construct()
 	{
 		$this->likes = 0;
+		parent::__construct();
 	}
 
-	public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getTitle(): ?string
     {
