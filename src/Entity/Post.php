@@ -23,7 +23,12 @@ class Post
     #[ORM\Column]
     private ?int $likes = null;
 
-    public function getId(): ?int
+	public function __construct()
+	{
+		$this->likes = 0;
+	}
+
+	public function getId(): ?int
     {
         return $this->id;
     }
