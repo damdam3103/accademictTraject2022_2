@@ -8,13 +8,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-    #[Route('/', name: 'app_default')]
-    public function index(): Response
-    {
-		return $this->redirectToRoute('post_list');
-//        return $this->render('default/index.html.twig', [
-//            'controller_name' => 'DefaultController',
-//			'posts' => 'post_list'
-//        ]);
-    }
+//    #[Route('/', name: 'app_default')]
+//    public function index(): Response
+//    {
+//		return $this->redirectToRoute('post_list');
+////        return $this->render('default/index.html.twig', [
+////            'controller_name' => 'DefaultController',
+////			'posts' => 'post_list'
+////        ]);
+//    }
+	#[Route('/{reactRouting}', name: 'app_default', defaults: ['reactRouting' => null] )]
+	 public function index(): Response {
+		 return $this->render('default/index.html.twig');
+	 }
 }

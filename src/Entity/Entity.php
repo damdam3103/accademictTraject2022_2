@@ -86,6 +86,8 @@ abstract class Entity
 		$this->modified = $modified;
 	}
 
+	//abstract public function __toString(): string;
+
 
 
 }
