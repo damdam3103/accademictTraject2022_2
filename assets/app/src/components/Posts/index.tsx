@@ -6,7 +6,6 @@ const Posts = () => {
 	console.log('test');
 	const [posts, setPosts] = useState([]);
 	useEffect(() => {
-		console.log("use effext")
 		const loadPosts = async () => {
 			const response = await axios.get('/api/post');
 			console.log(response.data);

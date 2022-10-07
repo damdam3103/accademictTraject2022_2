@@ -1,6 +1,8 @@
 import React from 'react';
 import Card from "react-bootstrap/Card";
 import {Button} from "react-bootstrap";
+import parse from 'html-react-parser';
+import DOMPurify from "dompurify";
 
 const PostDetails = (props: any) => {
 	const {post} = props;
@@ -11,7 +13,7 @@ const PostDetails = (props: any) => {
 					{post.title}
 				</Card.Title>
 				<Card.Text>
-					{post.message}
+					{parse(DOMPurify.sanitize(post.message))}
 				</Card.Text>
 				<Button variant="info"><a href="" >Show details</a></Button>
 				<Button variant="warning"><a href="" >Edit</a></Button>
